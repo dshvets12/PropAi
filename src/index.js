@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const { initializeDatabase } = require('./db/schema');
 
 // Ensure database tables exist
@@ -8,6 +9,9 @@ initializeDatabase();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve landing page and static assets
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Routes
 app.use('/webhook', require('./routes/webhook'));
